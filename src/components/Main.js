@@ -7,16 +7,16 @@ class Main extends Component {
       <div id="content">
         <h1>Add Product</h1>
         <form onSubmit={(event) => {
-          event.preventDefault()
-          const name = this.productName.value
-          const price = window.web3.utils.toWei(this.productPrice.value.toString(), 'ether') // change 'Ether' to 'ether'
-          this.props.createProduct(name, price)
+          event.preventDefault();
+          const name = this.productName.value;
+          const price = window.web3.utils.toWei(this.productPrice.value.toString(), 'ether');
+          this.props.createProduct(name, price);
         }}>
           <div className="form-group mr-sm-2">
             <input
               id="productName"
               type="text"
-              ref={(input) => { this.productName = input }}
+              ref={(input) => { this.productName = input; }}
               className="form-control"
               placeholder="Product Name"
               required />
@@ -25,7 +25,7 @@ class Main extends Component {
             <input
               id="productPrice"
               type="text"
-              ref={(input) => { this.productPrice = input }}
+              ref={(input) => { this.productPrice = input; }}
               className="form-control"
               placeholder="Product Price"
               required />
@@ -45,35 +45,31 @@ class Main extends Component {
             </tr>
           </thead>
           <tbody id="productList">
-            { this.props.products.map((product, key) => {
-              return(
-                <tr key={key}>
-                  <th scope="row">{product.id.toString()}</th>
-                  <td>{product.name}</td>
-                  <td>{window.web3.utils.fromWei(product.price.toString(), 'ether')} Eth</td> {/* change 'Ether' to 'ether' */}
-                  <td>{product.owner}</td>
-                  <td>
-                    { !product.purchased
-                      ? <button
-                          name={product.id}
-                          value={product.price}
-                          onClick={(event) => {
-                            this.props.purchaseProduct(event.target.name, event.target.value)
-                          }}
-                        >
-                          Buy
-                        </button>
-                      : null
-                    }
-                    </td>
-                </tr>
-              )
-            })}
+            {this.props.products && this.props.products.map((product, key) => (
+              <tr key={key}>
+                <th scope="row">{product.id.toString()}</th>
+                <td>{product.name}</td>
+                <td>{window.web3.utils.fromWei(product.price.toString(), 'ether')} Eth</td>
+                <td>{product.owner}</td>
+                <td>
+                  {!product.purchased && (
+                    <button
+                      name={product.id}
+                      value={product.price}
+                      onClick={(event) => {
+                        this.props.purchaseProduct(event.target.name, event.target.value);
+                      }}
+                    >
+                      Buy
+                    </button>
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     );
   }
 }
-
 export default Main;
