@@ -18,7 +18,7 @@ contract Marketplace {
     event ProductPurchased(uint id, string name, uint price, address payable owner, bool purchased);
 
     constructor() public {
-        name = "Dapp University Marketplace";
+        name = "IBU Marketplace";
     }
 
     modifier increment(){
